@@ -1,0 +1,7 @@
+{
+  "hands": {
+    "hour": { "color": "#ffffff", "width": 6, "length": 50 },
+    "minute": { "color": "#cccccc", "width": 4, "length": 70 },
+    "second": { "color": "#ff5555", "width": 2, "length": 80 }
+  }
+}
