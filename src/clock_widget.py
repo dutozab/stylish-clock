@@ -99,10 +99,20 @@ class AnalogClock(QWidget):
 
         # 背景画像
         if self.bg_pixmap:
+            scale = self.config["background"].get("image_scale", 1.0)
+
+            size = int(200 * scale)
+            offset = size // 2
+
             painter.setOpacity(
                 self.config["background"].get("image_opacity", 1.0)
             )
-            painter.drawPixmap(-100, -100, 200, 200, self.bg_pixmap)
+            painter.drawPixmap(
+                -offset, -offset,
+                size, size,
+                self.bg_pixmap
+            )
+
 
         painter.restore()
         painter.setOpacity(1.0)
