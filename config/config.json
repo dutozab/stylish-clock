@@ -1,7 +1,31 @@
 {
+  "window": {
+    "size": 320,
+    "always_on_top": true,
+    "opacity": 0.95
+  },
+
+  "background": {
+    "color": "#141414",
+    "image": "assets/images/clock_bg.png",
+    "image_opacity": 1.0
+  },
+
   "hands": {
-    "hour": { "color": "#ffffff", "width": 6, "length": 50 },
-    "minute": { "color": "#cccccc", "width": 4, "length": 70 },
-    "second": { "color": "#ff5555", "width": 2, "length": 80 }
+    "hour": {
+      "color": "#ffffff",
+      "width": 6,
+      "length": 50
+    },
+    "minute": {
+      "color": "#cccccc",
+      "width": 4,
+      "length": 70
+    },
+    "second": {
+      "color": "#ff5555",
+      "width": 2,
+      "length": 80
+    }
   }
 }
