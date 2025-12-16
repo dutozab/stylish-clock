@@ -2,6 +2,7 @@ import math
 from datetime import datetime
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import QTimer, Qt
+from PySide6.QtGui import QConicalGradient
 from PySide6.QtGui import (
     QPainter,
     QPen,
@@ -84,6 +85,7 @@ class AnalogClock(QWidget):
     # --------------------------------------------------
     # 背景
     # --------------------------------------------------
+
     def draw_background(self, painter: QPainter):
         painter.save()
 
@@ -91,11 +93,28 @@ class AnalogClock(QWidget):
         path.addEllipse(-100, -100, 200, 200)
         painter.setClipPath(path)
 
-        # 背景色
-        bg_color = QColor(self.config["background"]["color"])
-        painter.setBrush(bg_color)
+        painter.save()
+
+        # 円形クリップ
+        path = QPainterPath()
+        path.addEllipse(-100, -100, 200, 200)
+        painter.setClipPath(path)
+
+        # ===== 虹色グラデーション =====
+        gradient = QConicalGradient(0, 0, 0)
+        gradient.setColorAt(0.00, QColor("#ff0000"))  # 赤
+        gradient.setColorAt(0.17, QColor("#ff7f00"))  # 橙
+        gradient.setColorAt(0.33, QColor("#ffff00"))  # 黄
+        gradient.setColorAt(0.50, QColor("#00ff00"))  # 緑
+        gradient.setColorAt(0.67, QColor("#0000ff"))  # 青
+        gradient.setColorAt(0.83, QColor("#4b0082"))  # 藍
+        gradient.setColorAt(1.00, QColor("#ff0000"))  # 赤（閉じる）
+
+        painter.setBrush(gradient)
         painter.setPen(Qt.NoPen)
         painter.drawEllipse(-100, -100, 200, 200)
+
+        painter.restore()
 
         # 背景画像
         if self.bg_pixmap:
@@ -112,7 +131,6 @@ class AnalogClock(QWidget):
                 size, size,
                 self.bg_pixmap
             )
-
 
         painter.restore()
         painter.setOpacity(1.0)
