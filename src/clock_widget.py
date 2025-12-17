@@ -42,6 +42,11 @@ class AnalogClock(QWidget):
         bg_image = self.config["background"].get("image")
         self.bg_pixmap = QPixmap(bg_image) if bg_image else None
 
+        # オーバーレイ画像
+        overlay_cfg = self.config.get("overlay", {})
+        overlay_img = overlay_cfg.get("image")
+        self.overlay_pixmap = QPixmap(overlay_img) if overlay_img else None
+
         # ===== タイマー =====
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update)
@@ -57,7 +62,9 @@ class AnalogClock(QWidget):
         side = min(self.width(), self.height())
         painter.translate(self.width() / 2, self.height() / 2)
         painter.scale(side / 200.0, side / 200.0)
-
+        # オーバーレイ（針の下）
+        if not self.config.get("overlay", {}).get("above_hands", False):
+            self.draw_overlay(painter)
         # ===== 背景描画 =====
         self.draw_background(painter)
 
@@ -80,6 +87,9 @@ class AnalogClock(QWidget):
             angle=now.second * 6,
             cfg=self.config["hands"]["second"]
         )
+        # オーバーレイ（針の上）
+        if self.config.get("overlay", {}).get("above_hands", False):
+            self.draw_overlay(painter)
 
     # --------------------------------------------------
     # 背景
@@ -135,6 +145,33 @@ class AnalogClock(QWidget):
         )
 
         painter.restore()
+
+    def draw_overlay(self, painter: QPainter):
+        cfg = self.config.get("overlay", {})
+        if not self.overlay_pixmap:
+            return
+
+        scale = cfg.get("scale", 1.0)
+        x = cfg.get("x", 0)
+        y = cfg.get("y", 0)
+        opacity = cfg.get("opacity", 1.0)
+
+        size = int(200 * scale)
+        half = size // 2
+
+        painter.save()
+        painter.setOpacity(opacity)
+
+        painter.drawPixmap(
+            -half + x,
+            -half + y,
+            size,
+            size,
+            self.overlay_pixmap
+        )
+
+        painter.restore()
+
 
     # --------------------------------------------------
     # ドラッグ移動

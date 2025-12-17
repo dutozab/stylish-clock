@@ -12,7 +12,15 @@
     "image_scale": 1.2
   },
 
-
+  "overlay": {
+    "image": "assets/images/character.png",
+    "scale": 0.6,
+    "x": 0,
+    "y": 10,
+    "opacity": 1.0,
+    "above_hands": false
+  },
+  
   "hands": {
     "hour": {
       "color": "#ffffff",
