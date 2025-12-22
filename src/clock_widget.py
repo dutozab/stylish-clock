@@ -62,12 +62,10 @@ class AnalogClock(QWidget):
         side = min(self.width(), self.height())
         painter.translate(self.width() / 2, self.height() / 2)
         painter.scale(side / 200.0, side / 200.0)
-        # オーバーレイ（針の下）
-        if not self.config.get("overlay", {}).get("above_hands", False):
-            self.draw_overlay(painter)
         # ===== 背景描画 =====
         self.draw_background(painter)
-
+        if not self.config.get("overlay",{}).get("above_hands",False):
+            self.draw_overlay(painter)
         # ===== 時刻取得 =====
         now = datetime.now()
 

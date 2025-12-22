@@ -6,7 +6,7 @@
   },
 
   "background": {
-    "color": "#141414",
+    "color": "#efefef",
     "image": "assets/images/clock_bg.png",
     "image_opacity": 1.0,
     "image_scale": 1.2
@@ -17,7 +17,7 @@
     "scale": 0.6,
     "x": 0,
     "y": 10,
-    "opacity": 1.0,
+    "opacity": 0.3,
     "above_hands": false
   },
   
